@@ -43,19 +43,19 @@ export default function Characters() {
 
 	return (
 		<Container fixed>
-			<Grid container spacing={3}>
+			<Grid container spacing={3} >
 				<Grid item xs={12} className={classes.marginPagination}>
-					<Pagination color="standard" size="large" count={Math.round(data.total / 15)} page={page} onChange={handleChange} />
+					<Pagination color="standard" count={Math.round(data.total / 15)} page={page} onChange={handleChange} />
 				</Grid>
 				
 				{characters.map(characterItem => {
-					return 	<Grid item xs={4} key={characterItem.name}> 
+					return 	<Grid item xs={12} sm={6} md={4} key={characterItem.name}> 
 								<Card key={characterItem.name} item={characterItem} /> 
 							</Grid>
 				})}
 
-				<Grid item xs={12} className={classes.marginPagination}>
-					<Pagination color="standard" size="large" count={Math.round(data.total / 15)} page={page} onChange={handleChange} />
+				<Grid item xs={12} className={classes.marginPagination} >
+					<Pagination color="standard" count={Math.round(data.total / 15)} page={page} onChange={handleChange} />
 				</Grid>
 			</Grid>
 		</Container>
