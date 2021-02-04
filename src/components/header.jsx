@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useHistory } from "react-router-dom";
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -15,18 +14,28 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import HomeIcon from '@material-ui/icons/Home';
 import GroupIcon from '@material-ui/icons/Group';
+import BrokenImageIcon from '@material-ui/icons/BrokenImage';
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
-	menuButton: {
-		marginRight: 15,
-	},
 	drawer: {
 		width: 220,
-		flexShrink: 0,
+	},
+	drawerIcon:{
+		marginBottom: 8,
+		marginTop: 7
 	},
 	link: {
 		textDecoration: "none",
 		color: '#000'
+	},
+	logo: {
+		marginLeft: "auto",
+    	marginRight: "auto",
+	},
+	dividerList:{
+		marginTop: 8,
+		marginBottom: 8
 	}
 });
 
@@ -35,11 +44,22 @@ export default function Header() {
 
 	const [open, setOpen] = useState(false);
 
-	const history = useHistory();
+	const headerItems = [
+		{ "Nome": "Home", "Link": "/", "Chave": "HomeKey", "Icone": "HomeIcon" },
+		{ "Nome": "Characters", "Link": "/Characters", "Chave": "CharactersKey", "Icone": "GroupIcon" },
+	];
 
-	const handleClickPage = (to) => {
-		history.push(to);
-	}
+	const IconSelected = (Icon) => {
+		switch(Icon.IconName){
+			case 'HomeIcon': return <HomeIcon/>;
+			case 'GroupIcon': return <GroupIcon/>;
+			default: return <BrokenImageIcon/>
+		}
+	};
+
+	function ListItemLink(props) {
+		return <ListItem button component="a" {...props} />;
+	};
 
 	const handleDrawerOpen = () => {
 		setOpen(true);
@@ -55,10 +75,10 @@ export default function Header() {
 		<>
 			<AppBar position="static">
 				<Toolbar>
-					<IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={handleDrawerOpen}>
+					<IconButton edge="start" color="inherit" aria-label="menu-icon" onClick={handleDrawerOpen}>
 						<MenuIcon />
 					</IconButton>
-					<img src={Logo} className={classes.logo} />
+					<Link to={'/'} className={classes.logo}><img src={Logo} /></Link>
 				</Toolbar>
 			</AppBar>
 			<Drawer
@@ -67,20 +87,21 @@ export default function Header() {
 				open={open}
 			>
 				<div className={classes.drawer}>
-					<IconButton onClick={handleDrawerClose}>
+					<IconButton color="inherit" className={classes.drawerIcon} onClick={handleDrawerClose}>
 						<ChevronLeftIcon />
 					</IconButton>
+					<Divider />
 				</div>
-				<Divider />
 				<List>
-					<ListItem button key={"Home"}>
-						<ListItemIcon><HomeIcon /></ListItemIcon>
-						<ListItemText primary={"Home"} />
-					</ListItem>
-					<ListItem button key={"Characters"}>
-						<ListItemIcon><GroupIcon /></ListItemIcon>
-						<ListItemText primary={"Characters"} />
-					</ListItem>
+					{headerItems.map((item,index) => (
+						<div key={index}>
+							<ListItemLink href={item.Link} button key={item.Chave}>
+								<ListItemIcon><IconSelected IconName={item.Icone} /></ListItemIcon>
+								<ListItemText primary={item.Nome} />
+							</ListItemLink>
+							<Divider className={classes.dividerList} />
+						</div>
+					))}
 				</List>
 			</Drawer>
 		</>

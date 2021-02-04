@@ -1,7 +1,16 @@
 body {
 	font-family: 'Roboto', sans-serif;
+	margin: 0;
 }
 
 .MuiPagination-ul{
 	place-content: center;
+}
+
+.MuiCircularProgress-colorSecondary{
+	color: #F0141E !important;	
+}
+
+.MuiAppBar-colorPrimary{
+	background-color: #393939 !important;
 }
