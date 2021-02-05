@@ -78,7 +78,7 @@ export default function Header() {
 					<IconButton edge="start" color="inherit" aria-label="menu-icon" onClick={handleDrawerOpen}>
 						<MenuIcon />
 					</IconButton>
-					<Link to={'/'} className={classes.logo}><img src={Logo} /></Link>
+					<Link to={'/'} className={classes.logo}><img src={Logo} alt="logo" /></Link>
 				</Toolbar>
 			</AppBar>
 			<Drawer
